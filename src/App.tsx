@@ -1,33 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import { Route, Routes } from 'react-router-dom'
+import Layout from './components/layout/Layout'
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import ServicePage from './pages/ServicePage'
+import PricePage from './pages/PricePage'
+import ContactUsPage from './pages/ContactUsPage'
+import SingleProductPage from './components/SingleProductPage'
 function App() {
-  const [count, setCount] = useState(0)
+  const sampleProduct: Product = {
+    id: 1,
+    title: 'Sample Product',
+    price: 129.99,
+    description: 'This is a sample product description for demonstration purposes.',
+    image: 'https://via.placeholder.com/600x400',
+    rating: 4.5,
+    reviews: [
+      { user: 'Alice', comment: 'Great product!', rating: 5 },
+      { user: 'Bob', comment: 'Good value for money.', rating: 4 }
+    ]
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path='/about' element={<AboutPage />} />
+          <Route path='/services' element={<ServicePage />} />
+          <Route path='/pricing' element={<PricePage />} />
+          <Route path='/contact' element={<ContactUsPage />} />
+          <Route path='/product/:id' element={<SingleProductPage product={sampleProduct} />} />
+        </Route>
+      </Routes>
+
     </>
   )
 }
